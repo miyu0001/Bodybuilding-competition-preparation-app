@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Miyu's Competition Prep</title>
+  <style>
+    :root {
+      --primary: #C17B6E;
+      --primary-dark: #A85E52;
+      --primary-light: #F2E8E6;
+      --protein: #4A90D9;
+      --carbs: #5A9E1A;
+      --fat: #F5A623;
+      --bg: #F7F4F2;
+      --card: #FFFFFF;
+      --text: #1C1C1E;
+      --text-sub: #8E8E93;
+      --border: #E8E3DF;
+      --shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      max-width: 430px;
+      margin: 0 auto;
+      padding-bottom: 88px;
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 430px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      display: flex; z-index: 100;
+      padding: 8px 0 env(safe-area-inset-bottom, 16px);
+    }
+    .nav-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 6px 0; cursor: pointer; color: var(--text-sub);
+      font-size: 10px; font-weight: 600; transition: color 0.2s;
+    }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 22px; line-height: 1; }
+
+    /* TABS */
+    .tab { display: none; }
+    .tab.active { display: block; }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 54px 20px 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .page-title { font-size: 28px; font-weight: 800; letter-spacing: -0.6px; }
+    .page-sub { font-size: 13px; color: var(--text-sub); margin-top: 2px; }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin: 0 14px 12px;
+    }
+    .card-label {
+      font-size: 11px; font-weight: 700; color: var(--text-sub);
+      text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 12px;
+    }
+
+    /* SCROLL */
+    .scroll-area { padding-top: 12px; padding-bottom: 8px; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; top: 56px; left: 50%;
+      transform: translateX(-50%) translateY(-12px);
+      background: rgba(28,28,30,0.92); color: white;
+      padding: 10px 22px; border-radius: 24px;
+      font-size: 14px; font-weight: 600;
+      z-index: 400; opacity: 0; transition: all 0.25s;
+      backdrop-filter: blur(10px); white-space: nowrap;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* MODAL */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 200;
+      align-items: flex-end; justify-content: center;
+      backdrop-filter: blur(6px);
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: white; border-radius: 24px 24px 0 0;
+      padding: 20px 20px 48px; width: 100%; max-width: 430px;
+      animation: slideUp 0.28s cubic-bezier(.32,.72,0,1);
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .modal-handle {
+      width: 36px; height: 4px; background: var(--border);
+      border-radius: 2px; margin: 0 auto 18px;
+    }
+    .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 18px; letter-spacing: -0.3px; }
+    .modal-input {
+      width: 100%; background: var(--bg); border: 2px solid transparent;
+      border-radius: 14px; padding: 14px 16px; font-size: 16px; color: var(--text);
+      outline: none; margin-bottom: 14px; transition: border-color 0.2s;
+    }
+    .modal-input:focus { border-color: var(--primary); }
+    .modal-btn {
+      width: 100%; padding: 16px; background: var(--primary); color: white;
+      border: none; border-radius: 16px; font-size: 16px; font-weight: 700; cursor: pointer;
+    }
+
+    /* ======================== HOME ======================== */
+    .countdown-card {
+      background: linear-gradient(135deg, #C17B6E 0%, #9A5449 100%);
+      color: white; margin: 14px 14px 12px; border-radius: 22px;
+      padding: 24px 24px 20px;
+      box-shadow: 0 10px 30px rgba(193,123,110,0.32);
+    }
+    .cd-label { font-size: 12px; font-weight: 700; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.6px; }
+    .cd-row { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
+    .cd-num { font-size: 72px; font-weight: 900; letter-spacing: -3px; line-height: 1; }
+    .cd-unit { font-size: 22px; font-weight: 700; opacity: 0.8; }
+    .cd-date { font-size: 13px; opacity: 0.65; margin-top: 6px; }
+    .cd-btn {
+      background: rgba(255,255,255,0.18); border: none; color: white;
+      padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 700;
+      cursor: pointer; margin-top: 14px;
+    }
+
+    .ring-wrap { display: flex; align-items: center; gap: 18px; }
+    .ring-rel { position: relative; flex-shrink: 0; }
+    .ring-center {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      text-align: center; pointer-events: none;
+    }
+    .ring-kcal { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
+    .ring-unit { font-size: 10px; color: var(--text-sub); font-weight: 600; }
+
+    .macro-rows { flex: 1; }
+    .m-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+    .m-row:last-child { margin-bottom: 0; }
+    .m-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .m-name { font-size: 12px; color: var(--text-sub); font-weight: 600; flex: 1; }
+    .m-val { font-size: 14px; font-weight: 800; }
+    .m-target { font-size: 10px; color: var(--text-sub); }
+
+    .meal-chips { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; margin-top: 14px; }
+    .meal-chips::-webkit-scrollbar { display: none; }
+    .meal-chip {
+      flex-shrink: 0; padding: 7px 12px; border-radius: 12px;
+      border: 1.5px solid var(--border); font-size: 11px; font-weight: 700;
+      background: white; color: var(--text-sub); cursor: pointer; transition: all 0.18s;
+    }
+    .meal-chip.done { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+
+    .stat-row { display: flex; gap: 10px; }
+    .stat-box {
+      flex: 1; background: var(--bg); border-radius: 14px;
+      padding: 12px 8px; text-align: center;
+    }
+    .stat-num { font-size: 26px; font-weight: 900; letter-spacing: -1px; }
+    .stat-lbl { font-size: 10px; color: var(--text-sub); font-weight: 600; margin-top: 2px; }
+
+    .prog-bar-wrap { background: var(--bg); border-radius: 6px; height: 8px; overflow: hidden; margin-top: 8px; }
+    .prog-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; background: linear-gradient(90deg, var(--primary), var(--primary-dark)); }
+
+    /* ======================== FOOD ======================== */
+    .food-sticky {
+      background: white; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .date-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px 10px;
+    }
+    .date-arrow {
+      width: 34px; height: 34px; border-radius: 50%; border: none;
+      background: var(--bg); cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow);
+    }
+    .date-txt { font-size: 16px; font-weight: 800; }
+
+    .macro-bar-grid { display: flex; gap: 8px; padding: 4px 16px 14px; }
+    .mbar { flex: 1; }
+    .mbar-top { display: flex; justify-content: space-between; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 4px; }
+    .mbar-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .mbar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+    .mbar-bot { font-size: 10px; color: var(--text-sub); text-align: right; margin-top: 3px; }
+
+    /* Meal cards */
+    .meal-card { background: white; margin: 0 14px 10px; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow); }
+    .meal-head { display: flex; align-items: center; padding: 14px 14px; cursor: pointer; gap: 10px; }
+    .meal-badge {
+      background: var(--primary-light); color: var(--primary);
+      font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 8px;
+      flex-shrink: 0; letter-spacing: 0.2px;
+    }
+    .meal-title { font-size: 15px; font-weight: 800; flex: 1; }
+    .meal-kcal-sm { font-size: 12px; font-weight: 600; color: var(--text-sub); }
+    .meal-check-btn {
+      width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.18s; font-size: 14px; flex-shrink: 0;
+      background: none;
+    }
+    .meal-check-btn.on { background: var(--primary); border-color: var(--primary); color: white; }
+    .meal-body { display: none; padding: 0 14px 14px; }
+    .meal-body.open { display: block; }
+    .food-row { display: flex; align-items: center; padding: 9px 0; border-top: 1px solid var(--border); gap: 8px; }
+    .food-row-name { flex: 1; font-size: 13px; font-weight: 600; }
+    .food-row-amt { font-size: 11px; color: var(--text-sub); font-weight: 600; }
+    .pill-row { display: flex; gap: 5px; }
+    .pill { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
+    .pill-p { background: rgba(74,144,217,0.12); color: #3D82C5; }
+    .pill-c { background: rgba(90,158,26,0.12); color: #4A8A0E; }
+    .pill-f { background: rgba(245,166,35,0.12); color: #D4890A; }
+    .supple-area { padding-top: 10px; border-top: 1px solid var(--border); }
+    .supple-label { font-size: 10px; color: var(--text-sub); font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 6px; }
+    .supple-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .supple-tag { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 8px; background: #F3F3F8; color: #888; }
+
+    .trainer-note-card {
+      background: #FFFAF8; border: 1.5px solid var(--primary-light);
+      margin: 0 14px 12px; border-radius: 16px; padding: 14px 16px;
+    }
+    .trainer-note-title { font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 7px; }
+    .trainer-note-body { font-size: 12px; color: var(--text-sub); line-height: 1.7; }
+
+    /* ======================== GYM ======================== */
+    .checkin-btn {
+      display: block; width: calc(100% - 28px); margin: 6px 14px;
+      padding: 22px; background: linear-gradient(135deg, #C17B6E, #9A5449);
+      color: white; border: none; border-radius: 22px;
+      font-size: 20px; font-weight: 900; cursor: pointer; letter-spacing: -0.3px;
+      box-shadow: 0 10px 28px rgba(193,123,110,0.35);
+      transition: all 0.18s; -webkit-appearance: none;
+    }
+    .checkin-btn:active { transform: scale(0.97); }
+    .checkin-btn.on { background: linear-gradient(135deg, #52B87A, #3A9462); box-shadow: 0 10px 28px rgba(82,184,122,0.32); }
+
+    .week-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; }
+    .wday {
+      aspect-ratio: 1; border-radius: 12px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2px;
+    }
+    .wday-name { font-size: 9px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; }
+    .wday-num { font-size: 14px; font-weight: 800; }
+    .wday.gym { background: var(--primary); color: white; }
+    .wday.gym .wday-name { color: rgba(255,255,255,0.7); }
+    .wday.today-hl { background: var(--primary-light); }
+    .wday.today-hl .wday-num { color: var(--primary); font-weight: 900; }
+    .wday.today-hl .wday-name { color: var(--primary); opacity: 0.7; }
+    .wday.dim { opacity: 0.3; }
+
+    .streak-center { text-align: center; padding: 4px 0; }
+    .streak-big { font-size: 58px; font-weight: 900; letter-spacing: -2px; color: var(--primary); line-height: 1; }
+    .streak-desc { font-size: 13px; color: var(--text-sub); margin-top: 6px; }
+
+    .month-grid-wrap { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+    .mday-header { text-align: center; font-size: 10px; font-weight: 700; color: var(--text-sub); padding: 4px 0; }
+    .mday {
+      aspect-ratio: 1; border-radius: 9px; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s; color: var(--text);
+    }
+    .mday:hover { background: var(--bg); }
+    .mday.gym-day { background: var(--primary); color: white; font-weight: 800; }
+    .mday.today-dot { border: 2px solid var(--primary); color: var(--primary); font-weight: 900; }
+    .mday.other { color: var(--border); pointer-events: none; }
+
+    /* ======================== WEIGHT ======================== */
+    .w-input-row { display: flex; gap: 10px; align-items: center; }
+    .w-input {
+      flex: 1; background: var(--bg); border: 2px solid transparent;
+      border-radius: 14px; padding: 14px 16px; font-size: 26px; font-weight: 800;
+      color: var(--text); text-align: center; outline: none; transition: border-color 0.2s;
+    }
+    .w-input:focus { border-color: var(--primary); }
+    .w-unit { font-size: 16px; color: var(--text-sub); font-weight: 700; }
+    .w-save {
+      background: var(--primary); color: white; border: none;
+      border-radius: 14px; padding: 14px 20px; font-size: 15px; font-weight: 800;
+      cursor: pointer; transition: all 0.18s; white-space: nowrap;
+    }
+    .w-save:active { transform: scale(0.96); }
+
+    .w-goals { display: flex; gap: 14px; }
+    .w-goal-box { flex: 1; }
+    .w-goal-label { font-size: 11px; color: var(--text-sub); font-weight: 700; margin-bottom: 6px; }
+    .w-goal-num { font-size: 30px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+    .w-goal-unit { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+    .w-goal-inline {
+      font-size: 30px; font-weight: 900; letter-spacing: -1px; line-height: 1;
+      background: none; border: none; border-bottom: 2px solid var(--border);
+      width: 90px; outline: none; color: var(--primary); -webkit-appearance: none;
+    }
+
+    .chart-wrap { position: relative; width: 100%; height: 180px; }
+
+    .period-chips { display: flex; gap: 6px; }
+    .period-chip {
+      padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+      background: var(--bg); color: var(--text-sub); border: none; cursor: pointer; transition: all 0.18s;
+    }
+    .period-chip.on { background: var(--primary); color: white; }
+
+    .hist-row { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .hist-row:last-child { border-bottom: none; }
+    .hist-date { flex: 1; font-size: 13px; color: var(--text-sub); font-weight: 600; }
+    .hist-w { font-size: 18px; font-weight: 800; margin-right: 10px; }
+    .hist-diff { font-size: 12px; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- ======================== HOME ======================== -->
+<div class="tab active" id="tab-home">
+  <div class="scroll-area">
+    <div class="countdown-card" id="cdCard">
+      <div class="cd-label">大会まで</div>
+      <div class="cd-row">
+        <div class="cd-num" id="cdNum">---</div>
+        <div class="cd-unit">日</div>
+      </div>
+      <div class="cd-date" id="cdDate">大会日を設定してください</div>
+      <button class="cd-btn" onclick="openDateModal()">📅 日程を設定</button>
+    </div>
+
+    <div class="card">
+      <div class="card-label">今日のマクロ</div>
+      <div class="ring-wrap">
+        <div class="ring-rel">
+          <canvas id="homeRing" width="108" height="108"></canvas>
+          <div class="ring-center">
+            <div class="ring-kcal" id="homeKcal">0</div>
+            <div class="ring-unit">kcal</div>
+          </div>
+        </div>
+        <div class="macro-rows">
+          <div class="m-row">
+            <div class="m-dot" style="background:var(--protein)"></div>
+            <div class="m-name">タンパク質</div>
+            <div>
+              <div class="m-val" id="hP" style="color:var(--protein)">0g</div>
+              <div class="m-target">/ 132g</div>
+            </div>
+          </div>
+          <div class="m-row">
+            <div class="m-dot" style="background:var(--carbs)"></div>
+            <div class="m-name">炭水化物</div>
+            <div>
+              <div class="m-val" id="hC" style="color:var(--carbs)">0g</div>
+              <div class="m-target">/ 161g</div>
+            </div>
+          </div>
+          <div class="m-row">
+            <div class="m-dot" style="background:var(--fat)"></div>
+            <div class="m-name">脂質</div>
+            <div>
+              <div class="m-val" id="hF" style="color:var(--fat)">0g</div>
+              <div class="m-target">/ 34g</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="meal-chips" id="homeChips"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">今週のジム</div>
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-num" id="hWeekGym" style="color:var(--primary)">0</div>
+          <div class="stat-lbl">今週 / 4日目標</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="hStreak">0</div>
+          <div class="stat-lbl">連続週 🔥</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="hTotal" style="color:var(--text-sub)">0</div>
+          <div class="stat-lbl">累計回数</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">体重</div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <div>
+          <span style="font-size:36px;font-weight:900;letter-spacing:-1.5px" id="hWeight">--</span>
+          <span style="font-size:14px;color:var(--text-sub);margin-left:4px">kg</span>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--text-sub)">目標</div>
+          <div style="font-size:20px;font-weight:800;color:var(--primary)" id="hTarget">--</div>
+        </div>
+      </div>
+      <div class="prog-bar-wrap" style="margin-top:10px">
+        <div class="prog-bar-fill" id="hWeightBar" style="width:0%"></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-sub);margin-top:5px;text-align:right" id="hWeightDiff"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== FOOD ======================== -->
+<div class="tab" id="tab-food">
+  <div class="food-sticky">
+    <div class="date-row">
+      <button class="date-arrow" onclick="shiftDay(-1)">‹</button>
+      <div class="date-txt" id="foodDate"></div>
+      <button class="date-arrow" onclick="shiftDay(1)">›</button>
+    </div>
+    <div class="macro-bar-grid">
+      <div class="mbar">
+        <div class="mbar-top" style="color:var(--protein)"><span>タンパク質</span></div>
+        <div class="mbar-track"><div class="mbar-fill" id="bP" style="background:var(--protein);width:0%"></div></div>
+        <div class="mbar-bot"><span id="bPn">0</span>/<span id="bPt">132</span>g</div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-top" style="color:var(--carbs)"><span>炭水化物</span></div>
+        <div class="mbar-track"><div class="mbar-fill" id="bC" style="background:var(--carbs);width:0%"></div></div>
+        <div class="mbar-bot"><span id="bCn">0</span>/<span id="bCt">161</span>g</div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-top" style="color:var(--fat)"><span>脂質</span></div>
+        <div class="mbar-track"><div class="mbar-fill" id="bF" style="background:var(--fat);width:0%"></div></div>
+        <div class="mbar-bot"><span id="bFn">0</span>/<span id="bFt">34</span>g</div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-top" style="color:var(--text-sub)"><span>kcal</span></div>
+        <div class="mbar-track"><div class="mbar-fill" id="bK" style="background:var(--primary);width:0%"></div></div>
+        <div class="mbar-bot"><span id="bKn">0</span>/<span id="bKt">1522</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-area" id="foodList"></div>
+</div>
+
+<!-- ======================== GYM ======================== -->
+<div class="tab" id="tab-gym">
+  <div class="page-header">
+    <div class="page-title">ジム記録</div>
+    <div class="page-sub" id="gymSub"></div>
+  </div>
+  <div class="scroll-area">
+    <button class="checkin-btn" id="checkinBtn" onclick="toggleToday()">
+      <span id="checkinTxt">今日 ジムに行った ✓</span>
+    </button>
+
+    <div class="card">
+      <div class="card-label">今週</div>
+      <div class="week-grid" id="weekGrid"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <div style="font-size:13px;color:var(--text-sub)">週の達成率</div>
+        <div style="font-size:15px;font-weight:800" id="weekProg">0 / 4</div>
+      </div>
+      <div class="prog-bar-wrap" style="margin-top:6px">
+        <div class="prog-bar-fill" id="weekBar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">連続週ストリーク</div>
+      <div class="streak-center">
+        <div class="streak-big" id="gymStreak">0</div>
+        <div class="streak-desc">週連続でジム4回以上 🔥</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="card-label" style="margin:0" id="calTitle"></div>
+        <div style="display:flex;gap:8px">
+          <button class="date-arrow" onclick="shiftMonth(-1)">‹</button>
+          <button class="date-arrow" onclick="shiftMonth(1)">›</button>
+        </div>
+      </div>
+      <div class="month-grid-wrap" id="calHead"></div>
+      <div class="month-grid-wrap" id="calGrid" style="margin-top:4px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== WEIGHT ======================== -->
+<div class="tab" id="tab-weight">
+  <div class="page-header">
+    <div class="page-title">体重管理</div>
+    <div class="page-sub">週1回・起床後・同条件で測定</div>
+  </div>
+  <div class="scroll-area">
+    <div class="card">
+      <div class="card-label">今日の体重を記録</div>
+      <div class="w-input-row">
+        <input type="number" class="w-input" id="wInput" placeholder="65.0" step="0.1" min="30" max="150">
+        <div class="w-unit">kg</div>
+        <button class="w-save" onclick="recordWeight()">記録</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">目標設定</div>
+      <div class="w-goals">
+        <div class="w-goal-box">
+          <div class="w-goal-label">現在</div>
+          <div class="w-goal-num" id="wCur">--</div>
+          <div class="w-goal-unit">kg</div>
+        </div>
+        <div class="w-goal-box">
+          <div class="w-goal-label">目標</div>
+          <input type="number" class="w-goal-inline" id="wTarget" placeholder="52" step="0.5" min="30" max="150" onchange="saveTarget()">
+          <div class="w-goal-unit">kg</div>
+        </div>
+        <div class="w-goal-box">
+          <div class="w-goal-label">残り</div>
+          <div class="w-goal-num" id="wRemain" style="color:var(--primary)">--</div>
+          <div class="w-goal-unit">kg</div>
+        </div>
+      </div>
+      <div class="prog-bar-wrap" style="margin-top:14px">
+        <div class="prog-bar-fill" id="wProgBar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="card-label" style="margin:0">推移グラフ</div>
+        <div class="period-chips">
+          <button class="period-chip on" onclick="setPeriod(this,'1m')">1ヶ月</button>
+          <button class="period-chip" onclick="setPeriod(this,'3m')">3ヶ月</button>
+          <button class="period-chip" onclick="setPeriod(this,'all')">全期間</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="wChart"></canvas></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">記録履歴</div>
+      <div id="wHistory"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="nav">
+  <div class="nav-item active" onclick="gotoTab('home',this)">
+    <div class="nav-icon">🏠</div><span>ホーム</span>
+  </div>
+  <div class="nav-item" onclick="gotoTab('food',this)">
+    <div class="nav-icon">🥗</div><span>食事</span>
+  </div>
+  <div class="nav-item" onclick="gotoTab('gym',this)">
+    <div class="nav-icon">💪</div><span>ジム</span>
+  </div>
+  <div class="nav-item" onclick="gotoTab('weight',this)">
+    <div class="nav-icon">⚖️</div><span>体重</span>
+  </div>
+</nav>
+
+<!-- DATE MODAL -->
+<div class="modal-bg" id="dateModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🏆 大会日を設定</div>
+    <input type="date" class="modal-input" id="dateInput">
+    <button class="modal-btn" onclick="saveCompDate()">設定する</button>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const SK = 'miyuprep_v1';
+let S = (() => { try { return JSON.parse(localStorage.getItem(SK)) || {}; } catch { return {}; } })();
+S.gym = S.gym || {};
+S.meals = S.meals || {};
+S.weights = S.weights || [];
+
+function save() { localStorage.setItem(SK, JSON.stringify(S)); }
+
+// ── MEALS ─────────────────────────────────────────────
+const MEALS = [
+  {
+    id: 'm1', name: 'Meal 1', time: '7:00',
+    items: [
+      { name: '白米', amt: '150g', p: 3.7, f: 0.4, c: 55, k: 251 },
+      { name: '鮭（切り身）', amt: '80g', p: 18, f: 3.6, c: 0.1, k: 110 },
+    ],
+    supple: ['アナバイト 2錠', 'カルニチン 2000mg', 'CLA 1000mg']
+  },
+  {
+    id: 'm2', name: 'Meal 2', time: '12:00',
+    items: [
+      { name: '白米', amt: '150g', p: 3.7, f: 0.4, c: 55, k: 251 },
+      { name: '鶏もも肉（皮なし）', amt: '150g', p: 32, f: 9, c: 0, k: 210 },
+    ],
+    supple: ['αリポ酸 300mg']
+  },
+  {
+    id: 'm3', name: 'Meal 3', time: '16:00',
+    items: [
+      { name: 'さつまいも', amt: '150g', p: 2, f: 0.5, c: 50, k: 210 },
+      { name: '鶏もも肉（皮なし）', amt: '150g', p: 32, f: 9, c: 0, k: 210 },
+    ],
+    supple: ['αリポ酸 300mg', 'クレアチン 5g']
+  },
+  {
+    id: 'eaa', name: 'トレーニング中', time: 'トレ中',
+    items: [{ name: 'EAA', amt: '15g', p: 15, f: 0, c: 0, k: 60 }],
+    supple: []
+  },
+  {
+    id: 'm4', name: 'Meal 4', time: '20:00',
+    items: [
+      { name: '全卵', amt: '2個', p: 13, f: 11, c: 0.4, k: 160 },
+      { name: '卵白', amt: '120g', p: 13, f: 0, c: 1, k: 60 },
+    ],
+    supple: ['アナバイト 2錠', 'CLA 1000mg', 'サイトリーン 2錠']
+  }
+];
+const TGT = { p: 132.4, f: 33.9, c: 161.5, k: 1522 };
+
+// ── UTIL ──────────────────────────────────────────────
+function today() { return new Date().toISOString().slice(0,10); }
+
+function fmtDate(ds) {
+  const d = new Date(ds + 'T00:00:00');
+  const dn = ['日','月','火','水','木','金','土'];
+  const isToday = ds === today();
+  const label = isToday ? '今日' : `${d.getMonth()+1}月${d.getDate()}日`;
+  return `${label}（${dn[d.getDay()]}）`;
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function getMacros(ds) {
+  const checks = S.meals[ds] || {};
+  let p=0,f=0,c=0,k=0;
+  MEALS.forEach(m => {
+    if (checks[m.id]) m.items.forEach(it => { p+=it.p; f+=it.f; c+=it.c; k+=it.k; });
+  });
+  return { p: Math.round(p*10)/10, f: Math.round(f*10)/10, c: Math.round(c*10)/10, k: Math.round(k) };
+}
+
+// ── TAB ───────────────────────────────────────────────
+const renderers = { home: renderHome, food: renderFood, gym: renderGym, weight: renderWeight };
+function gotoTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  el.classList.add('active');
+  renderers[name]();
+}
+
+// ── COMPETITION DATE ──────────────────────────────────
+function openDateModal() {
+  const m = document.getElementById('dateModal');
+  m.classList.add('open');
+  if (S.compDate) document.getElementById('dateInput').value = S.compDate;
+}
+document.getElementById('dateModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+function saveCompDate() {
+  const v = document.getElementById('dateInput').value;
+  if (!v) return;
+  S.compDate = v; save();
+  document.getElementById('dateModal').classList.remove('open');
+  renderCountdown(); toast('大会日を設定しました 🏆');
+}
+
+function renderCountdown() {
+  const numEl = document.getElementById('cdNum');
+  const dateEl = document.getElementById('cdDate');
+  if (!S.compDate) { numEl.textContent = '---'; dateEl.textContent = '大会日を設定してください'; return; }
+  const now = new Date(); now.setHours(0,0,0,0);
+  const comp = new Date(S.compDate + 'T00:00:00');
+  const diff = Math.ceil((comp - now) / 86400000);
+  numEl.textContent = Math.max(0, diff);
+  const d = comp;
+  dateEl.textContent = `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
+}
+
+// ── RING ──────────────────────────────────────────────
+function drawRing(id, p, f, c) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2;
+  const r = W/2 - 9, lw = 9;
+  ctx.clearRect(0,0,W,H);
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='#EDE8E4'; ctx.lineWidth=lw; ctx.stroke();
+  const pK = p*4, fK = f*9, cK = c*4, tot = pK+fK+cK;
+  if (tot === 0) return;
+  const maxK = Math.max(TGT.k, tot);
+  const fill = Math.min(tot/maxK, 1) * Math.PI*2;
+  const segs = [{v:pK,col:'#4A90D9'},{v:cK,col:'#5A9E1A'},{v:fK,col:'#F5A623'}];
+  let cur = -Math.PI/2;
+  segs.forEach(s => {
+    const a = (s.v/tot)*fill;
+    ctx.beginPath(); ctx.arc(cx,cy,r,cur,cur+a);
+    ctx.strokeStyle=s.col; ctx.lineWidth=lw; ctx.lineCap='round'; ctx.stroke();
+    cur += a;
+  });
+}
+
+// ── HOME ──────────────────────────────────────────────
+function renderHome() {
+  renderCountdown();
+  const m = getMacros(today());
+  document.getElementById('homeKcal').textContent = m.k;
+  document.getElementById('hP').textContent = m.p+'g';
+  document.getElementById('hC').textContent = m.c+'g';
+  document.getElementById('hF').textContent = m.f+'g';
+  drawRing('homeRing', m.p, m.f, m.c);
+
+  // chips
+  const chips = document.getElementById('homeChips');
+  chips.innerHTML = '';
+  const checks = S.meals[today()] || {};
+  MEALS.forEach(ml => {
+    const ch = document.createElement('div');
+    ch.className = 'meal-chip' + (checks[ml.id] ? ' done' : '');
+    ch.textContent = ml.id === 'eaa' ? 'EAA' : ml.name;
+    chips.appendChild(ch);
+  });
+
+  // gym stats
+  const tw = new Date(); tw.setHours(0,0,0,0);
+  const wStart = new Date(tw); const dow = tw.getDay();
+  wStart.setDate(tw.getDate() - (dow===0?6:dow-1));
+  let wCnt = 0;
+  for (let i=0;i<7;i++) {
+    const d = new Date(wStart); d.setDate(wStart.getDate()+i);
+    if (S.gym[d.toISOString().slice(0,10)]) wCnt++;
+  }
+  document.getElementById('hWeekGym').textContent = wCnt;
+  document.getElementById('hStreak').textContent = calcStreak();
+  document.getElementById('hTotal').textContent = Object.keys(S.gym).filter(k=>S.gym[k]).length;
+
+  // weight
+  if (S.weights.length > 0) {
+    const lat = S.weights[S.weights.length-1];
+    document.getElementById('hWeight').textContent = lat.w;
+    if (S.wTarget) {
+      const tgt = parseFloat(S.wTarget), cur = lat.w, start = S.weights[0].w;
+      document.getElementById('hTarget').textContent = tgt+'kg';
+      const rem = (cur-tgt).toFixed(1);
+      document.getElementById('hWeightDiff').textContent = rem>0 ? `あと -${rem}kg` : '目標達成！🎉';
+      if (start > tgt) {
+        const pct = Math.max(0, Math.min(100, ((start-cur)/(start-tgt))*100));
+        document.getElementById('hWeightBar').style.width = pct+'%';
+      }
+    }
+  }
+}
+
+// ── FOOD ──────────────────────────────────────────────
+let foodDay = today();
+
+function shiftDay(d) {
+  const dt = new Date(foodDay+'T00:00:00'); dt.setDate(dt.getDate()+d);
+  foodDay = dt.toISOString().slice(0,10); renderFood();
+}
+
+function renderFood() {
+  document.getElementById('foodDate').textContent = fmtDate(foodDay);
+  const m = getMacros(foodDay);
+  const pct = (v, t) => Math.min(100, (v/t)*100).toFixed(1)+'%';
+
+  document.getElementById('bPn').textContent = m.p; document.getElementById('bP').style.width = pct(m.p, TGT.p);
+  document.getElementById('bCn').textContent = m.c; document.getElementById('bC').style.width = pct(m.c, TGT.c);
+  document.getElementById('bFn').textContent = m.f; document.getElementById('bF').style.width = pct(m.f, TGT.f);
+  document.getElementById('bKn').textContent = m.k; document.getElementById('bK').style.width = pct(m.k, TGT.k);
+
+  const list = document.getElementById('foodList');
+  list.innerHTML = '';
+  const checks = S.meals[foodDay] || {};
+
+  MEALS.forEach(ml => {
+    const mK = ml.items.reduce((s,i)=>s+i.k,0);
+    const on = !!checks[ml.id];
+    const card = document.createElement('div'); card.className = 'meal-card';
+
+    // head
+    const head = document.createElement('div'); head.className = 'meal-head';
+    head.innerHTML = `
+      <div class="meal-badge">${ml.time}</div>
+      <div class="meal-title">${ml.name}</div>
+      <div class="meal-kcal-sm">${mK} kcal</div>
+      <button class="meal-check-btn ${on?'on':''}" onclick="toggleMeal('${ml.id}',event)">
+        ${on?'✓':''}
+      </button>`;
+    head.addEventListener('click', e => {
+      if (e.target.classList.contains('meal-check-btn') || e.target.closest('.meal-check-btn')) return;
+      body.classList.toggle('open');
+    });
+
+    // body
+    const body = document.createElement('div'); body.className = 'meal-body';
+
+    ml.items.forEach(it => {
+      const row = document.createElement('div'); row.className = 'food-row';
+      row.innerHTML = `
+        <div class="food-row-name">${it.name}</div>
+        <div class="food-row-amt">${it.amt}</div>
+        <div class="pill-row">
+          <span class="pill pill-p">P${it.p}</span>
+          <span class="pill pill-c">C${it.c}</span>
+          <span class="pill pill-f">F${it.f}</span>
+        </div>`;
+      body.appendChild(row);
+    });
+
+    if (ml.supple.length > 0) {
+      const sa = document.createElement('div'); sa.className = 'supple-area';
+      sa.innerHTML = `<div class="supple-label">サプリメント</div>
+        <div class="supple-tags">${ml.supple.map(s=>`<span class="supple-tag">${s}</span>`).join('')}</div>`;
+      body.appendChild(sa);
+    }
+
+    card.appendChild(head); card.appendChild(body);
+    list.appendChild(card);
+  });
+
+  // trainer note
+  const note = document.createElement('div'); note.className = 'trainer-note-card';
+  note.innerHTML = `<div class="trainer-note-title">📋 トレーナーメモ</div>
+    <div class="trainer-note-body">・野菜類はカウント外（ビタミン・食物繊維のため積極的に食べる）<br>・食事タイミングは多少ズレても大丈夫</div>`;
+  list.appendChild(note);
+}
+
+function toggleMeal(id, e) {
+  e.stopPropagation();
+  if (!S.meals[foodDay]) S.meals[foodDay] = {};
+  S.meals[foodDay][id] = !S.meals[foodDay][id];
+  save(); renderFood();
+  const ml = MEALS.find(m=>m.id===id);
+  if (S.meals[foodDay][id]) toast(ml.name + ' 完了！✓');
+}
+
+// ── GYM ───────────────────────────────────────────────
+let calMonth = new Date();
+
+function renderGym() {
+  document.getElementById('gymSub').textContent = fmtDate(today());
+  const on = !!S.gym[today()];
+  const btn = document.getElementById('checkinBtn');
+  btn.className = 'checkin-btn' + (on?' on':'');
+  document.getElementById('checkinTxt').textContent = on ? '今日のジム 完了 ✓' : '今日 ジムに行った ✓';
+
+  // week grid
+  const tw = new Date(); tw.setHours(0,0,0,0);
+  const dow = tw.getDay();
+  const wStart = new Date(tw); wStart.setDate(tw.getDate()-(dow===0?6:dow-1));
+  const grid = document.getElementById('weekGrid'); grid.innerHTML='';
+  const dn = ['月','火','水','木','金','土','日'];
+  let wCnt = 0;
+  for (let i=0;i<7;i++) {
+    const d = new Date(wStart); d.setDate(wStart.getDate()+i);
+    const ds = d.toISOString().slice(0,10);
+    const isToday = ds===today(), isGym=!!S.gym[ds], isPast=d<tw;
+    if (isGym) wCnt++;
+    const cell = document.createElement('div');
+    cell.className = 'wday'+(isGym?' gym':(isToday&&!isGym?' today-hl':(isPast&&!isGym?' dim':'')));
+    cell.innerHTML = `<div class="wday-name">${dn[i]}</div><div class="wday-num">${d.getDate()}</div>`;
+    grid.appendChild(cell);
+  }
+  document.getElementById('weekProg').textContent = wCnt+' / 4';
+  document.getElementById('weekBar').style.width = Math.min(100,(wCnt/4)*100)+'%';
+  document.getElementById('gymStreak').textContent = calcStreak();
+  renderCal();
+}
+
+function calcStreak() {
+  const tw = new Date(); tw.setHours(0,0,0,0);
+  let streak = 0;
+  for (let w=0; w<=52; w++) {
+    const ws = new Date(tw);
+    const d = tw.getDay(); ws.setDate(tw.getDate()-(d===0?6:d-1)-w*7);
+    let cnt = 0;
+    for (let i=0;i<7;i++) {
+      const dd = new Date(ws); dd.setDate(ws.getDate()+i);
+      if (dd > tw) break;
+      if (S.gym[dd.toISOString().slice(0,10)]) cnt++;
+    }
+    if (w===0 && cnt>=4) { streak++; continue; }
+    if (w===0) break;
+    if (cnt>=4) streak++; else break;
+  }
+  return streak;
+}
+
+function toggleToday() {
+  const ds = today();
+  S.gym[ds] = !S.gym[ds];
+  if (!S.gym[ds]) delete S.gym[ds];
+  save(); renderGym();
+  if (S.gym[ds]) toast('ジム記録 完了！💪');
+}
+
+function renderCal() {
+  const y = calMonth.getFullYear(), mo = calMonth.getMonth();
+  document.getElementById('calTitle').textContent = `${y}年${mo+1}月`;
+  const head = document.getElementById('calHead'); head.innerHTML='';
+  ['月','火','水','木','金','土','日'].forEach(d => {
+    const h = document.createElement('div'); h.className='mday-header'; h.textContent=d;
+    head.appendChild(h);
+  });
+  const grid = document.getElementById('calGrid'); grid.innerHTML='';
+  const first = new Date(y,mo,1); const fdow = first.getDay();
+  const off = fdow===0?6:fdow-1;
+  const last = new Date(y,mo+1,0).getDate();
+  const td = today();
+  for (let i=0;i<off;i++) { const e=document.createElement('div'); e.className='mday other'; e.textContent=''; grid.appendChild(e); }
+  for (let d=1;d<=last;d++) {
+    const ds = `${y}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const cell = document.createElement('div');
+    const isGym=!!S.gym[ds], isTd=ds===td;
+    cell.className='mday'+(isGym?' gym-day':(isTd?' today-dot':''));
+    cell.textContent=d;
+    cell.onclick=()=>{ S.gym[ds]=!S.gym[ds]; if(!S.gym[ds]) delete S.gym[ds]; save(); renderGym(); };
+    grid.appendChild(cell);
+  }
+}
+
+function shiftMonth(d) { calMonth.setMonth(calMonth.getMonth()+d); renderCal(); }
+
+// ── WEIGHT ────────────────────────────────────────────
+let chartPeriod = '1m';
+
+function renderWeight() {
+  if (S.wTarget) document.getElementById('wTarget').value = S.wTarget;
+  updateWeightStats();
+  drawChart();
+  renderHistory();
+}
+
+function updateWeightStats() {
+  const tgt = S.wTarget ? parseFloat(S.wTarget) : null;
+  if (S.weights.length > 0) {
+    const lat = S.weights[S.weights.length-1];
+    document.getElementById('wCur').textContent = lat.w;
+    if (tgt) {
+      const rem = (lat.w - tgt).toFixed(1);
+      document.getElementById('wRemain').textContent = rem>0 ? '-'+rem : '達成!';
+      if (S.weights[0].w > tgt) {
+        const pct = Math.max(0,Math.min(100,((S.weights[0].w-lat.w)/(S.weights[0].w-tgt))*100));
+        document.getElementById('wProgBar').style.width = pct+'%';
+      }
+    }
+  }
+}
+
+function recordWeight() {
+  const v = parseFloat(document.getElementById('wInput').value);
+  if (!v||v<30||v>150) { toast('正しい体重を入力してください'); return; }
+  const ds = today();
+  const idx = S.weights.findIndex(w=>w.d===ds);
+  if (idx>=0) S.weights[idx].w=v; else { S.weights.push({d:ds,w:v}); S.weights.sort((a,b)=>a.d.localeCompare(b.d)); }
+  save(); document.getElementById('wInput').value='';
+  renderWeight(); toast(`${v}kg を記録しました！`);
+}
+
+function saveTarget() {
+  S.wTarget = document.getElementById('wTarget').value; save(); updateWeightStats();
+}
+
+function setPeriod(btn, p) {
+  document.querySelectorAll('.period-chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on'); chartPeriod=p; drawChart();
+}
+
+function drawChart() {
+  const canvas = document.getElementById('wChart'); if (!canvas) return;
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth; canvas.height = 180;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const W=canvas.width, H=canvas.height;
+
+  let ws = [...S.weights];
+  if (chartPeriod !== 'all') {
+    const cut = new Date(); if(chartPeriod==='1m') cut.setMonth(cut.getMonth()-1); else cut.setMonth(cut.getMonth()-3);
+    const cs = cut.toISOString().slice(0,10); ws = ws.filter(w=>w.d>=cs);
+  }
+  if (ws.length===0) {
+    ctx.fillStyle='#8E8E93'; ctx.font='14px -apple-system'; ctx.textAlign='center';
+    ctx.fillText('体重を記録すると表示されます', W/2, 90); return;
+  }
+
+  const pad={t:14,r:12,b:28,l:40};
+  const cW=W-pad.l-pad.r, cH=H-pad.t-pad.b;
+  const tgt=S.wTarget?parseFloat(S.wTarget):null;
+  const vals=ws.map(w=>w.w);
+  const mn=Math.min(...vals,tgt||Infinity)-1.5, mx=Math.max(...vals,tgt||-Infinity)+1.5;
+  const rng=mx-mn||5;
+  const tx=i=>pad.l+(ws.length===1?cW/2:(i/(ws.length-1))*cW);
+  const ty=v=>pad.t+cH-((v-mn)/rng)*cH;
+
+  // grid
+  ctx.strokeStyle='#EDE8E4'; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++) {
+    const y=pad.t+(i/4)*cH;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(W-pad.r,y); ctx.stroke();
+    ctx.fillStyle='#8E8E93'; ctx.font='10px -apple-system'; ctx.textAlign='right';
+    ctx.fillText((mx-(i/4)*rng).toFixed(1), pad.l-4, y+4);
+  }
+
+  // target line
+  if (tgt && tgt>=mn && tgt<=mx) {
+    const ty2=ty(tgt);
+    ctx.strokeStyle='rgba(193,123,110,0.5)'; ctx.lineWidth=1.5; ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(pad.l,ty2); ctx.lineTo(W-pad.r,ty2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='var(--primary)'; ctx.font='bold 10px -apple-system'; ctx.textAlign='left';
+    ctx.fillText('目標 '+tgt+'kg', pad.l+4, ty2-4);
+  }
+
+  // area
+  if (ws.length>1) {
+    const g=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
+    g.addColorStop(0,'rgba(193,123,110,0.14)'); g.addColorStop(1,'rgba(193,123,110,0)');
+    ctx.beginPath(); ctx.moveTo(tx(0),ty(ws[0].w));
+    ws.forEach((w,i)=>{
+      if(i===0)return;
+      const x0=tx(i-1),y0=ty(ws[i-1].w),x1=tx(i),y1=ty(w.w),cp=(x0+x1)/2;
+      ctx.bezierCurveTo(cp,y0,cp,y1,x1,y1);
+    });
+    ctx.lineTo(tx(ws.length-1),H-pad.b); ctx.lineTo(tx(0),H-pad.b); ctx.closePath();
+    ctx.fillStyle=g; ctx.fill();
+  }
+
+  // line
+  ctx.strokeStyle='#C17B6E'; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.lineCap='round';
+  ctx.beginPath();
+  ws.forEach((w,i)=>{
+    const x=tx(i),y=ty(w.w);
+    if(i===0){ctx.moveTo(x,y);return;}
+    const x0=tx(i-1),y0=ty(ws[i-1].w),cp=(x0+x)/2;
+    ctx.bezierCurveTo(cp,y0,cp,y,x,y);
+  });
+  ctx.stroke();
+
+  // dots
+  ws.forEach((w,i)=>{
+    const x=tx(i),y=ty(w.w);
+    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle='white'; ctx.fill();
+    ctx.strokeStyle='#C17B6E'; ctx.lineWidth=2; ctx.stroke();
+  });
+
+  // x labels
+  const step=Math.ceil(ws.length/5);
+  ws.forEach((w,i)=>{
+    if(i%step!==0&&i!==ws.length-1)return;
+    const d=new Date(w.d+'T00:00:00');
+    ctx.fillStyle='#8E8E93'; ctx.font='10px -apple-system'; ctx.textAlign='center';
+    ctx.fillText(`${d.getMonth()+1}/${d.getDate()}`,tx(i),H-pad.b+14);
+  });
+}
+
+function renderHistory() {
+  const el=document.getElementById('wHistory'); el.innerHTML='';
+  const rev=[...S.weights].reverse().slice(0,12);
+  if(rev.length===0){ el.innerHTML='<div style="text-align:center;color:var(--text-sub);font-size:14px;padding:16px">まだ記録がありません</div>'; return; }
+  rev.forEach((w,i)=>{
+    const prev=S.weights[S.weights.length-1-i+1];
+    const diff=prev?(w.w-prev.w).toFixed(1):null;
+    const d=new Date(w.d+'T00:00:00');
+    const dn=['日','月','火','水','木','金','土'];
+    const row=document.createElement('div'); row.className='hist-row';
+    const diffHtml=diff!==null?`<div class="hist-diff" style="color:${parseFloat(diff)<0?'#52B87A':parseFloat(diff)>0?'#E85D4A':'var(--text-sub)'}">${parseFloat(diff)>0?'+':''}${diff}</div>`:'';
+    row.innerHTML=`<div class="hist-date">${d.getMonth()+1}/${d.getDate()}（${dn[d.getDay()]}）</div><div class="hist-w">${w.w} kg</div>${diffHtml}`;
+    el.appendChild(row);
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderFood();
+});
+window.addEventListener('resize', () => {
+  if (document.getElementById('tab-weight').classList.contains('active')) drawChart();
+});
+</script>
+</body>
+</html>
