@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Miyu Prep</title>
   <style>
     :root {
@@ -31,10 +31,12 @@
     }
     *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
     html{background:var(--bg)}
-    body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:84px}
+    body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:calc(54px + env(safe-area-inset-bottom,34px))}
 
     /* NAV */
-    .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(249,249,249,.94);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid rgba(0,0,0,.12);display:flex;z-index:100;padding:8px 0 env(safe-area-inset-bottom,18px)}
+    .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(249,249,249,.94);backdrop-filter:blur(20px) saturate(180%);border-top:.5px solid rgba(0,0,0,.12);display:flex;flex-direction:column;z-index:100}
+    .nav-items{display:flex;padding:10px 0 0}
+    .nav-safe{height:env(safe-area-inset-bottom,34px)}
     .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;color:rgba(60,60,67,.4);font-size:10px;font-weight:500;letter-spacing:.1px;transition:color .15s}
     .ni.on{color:var(--acc)}
     .ni svg{width:22px;height:22px}
@@ -143,7 +145,7 @@
 
     .mbars{display:flex;gap:8px;margin-top:2px}
     .mb{flex:1}
-    .mb-n{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+    .mb-n{font-size:9px;font-weight:700;letter-spacing:0;margin-bottom:4px}
     .mb-t{height:5px;background:var(--fill2);border-radius:3px;overflow:hidden}
     .mb-f{height:100%;border-radius:3px;transition:width .4s ease}
     .mb-v{font-size:10px;color:var(--t2);text-align:right;margin-top:2px;font-weight:500}
@@ -256,6 +258,10 @@
   </div>
 
   <!-- CARB MODE SELECTOR — HOME -->
+  <div style="padding:0 16px 6px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px">今日のカーボ</div>
+    <div style="font-size:10px;color:var(--t3);font-weight:600" id="hAutoLbl">自動：土日ハイカーボ</div>
+  </div>
   <div class="carb-mode-row">
     <button class="cm-btn" id="hLowBtn" onclick="setHomeCarbMode('low')">
       <div class="cm-icon">🔵</div>
@@ -343,10 +349,10 @@
       <button class="cs-toggle" id="csToggle" onclick="toggleCarbMode()">切替</button>
     </div>
     <div class="mbars">
-      <div class="mb"><div class="mb-n" style="color:var(--pro)">P</div><div class="mb-t"><div class="mb-f" id="bP" style="background:var(--pro);width:0%"></div></div><div class="mb-v"><span id="bPn">0</span>/<span id="bPt">132</span>g</div></div>
-      <div class="mb"><div class="mb-n" style="color:var(--car)">C</div><div class="mb-t"><div class="mb-f" id="bC" style="background:var(--car);width:0%"></div></div><div class="mb-v"><span id="bCn">0</span>/<span id="bCt">161</span>g</div></div>
-      <div class="mb"><div class="mb-n" style="color:var(--fat)">F</div><div class="mb-t"><div class="mb-f" id="bF" style="background:var(--fat);width:0%"></div></div><div class="mb-v"><span id="bFn">0</span>/<span id="bFt">34</span>g</div></div>
-      <div class="mb"><div class="mb-n" style="color:var(--t2)">kcal</div><div class="mb-t"><div class="mb-f" id="bK" style="background:var(--acc);width:0%"></div></div><div class="mb-v"><span id="bKn">0</span>/<span id="bKt">1522</span></div></div>
+      <div class="mb"><div class="mb-n" style="color:var(--pro)">タンパク質</div><div class="mb-t"><div class="mb-f" id="bP" style="background:var(--pro);width:0%"></div></div><div class="mb-v"><span id="bPn">0</span>/<span id="bPt">132</span>g</div></div>
+      <div class="mb"><div class="mb-n" style="color:var(--car)">炭水化物</div><div class="mb-t"><div class="mb-f" id="bC" style="background:var(--car);width:0%"></div></div><div class="mb-v"><span id="bCn">0</span>/<span id="bCt">161</span>g</div></div>
+      <div class="mb"><div class="mb-n" style="color:var(--fat)">脂質</div><div class="mb-t"><div class="mb-f" id="bF" style="background:var(--fat);width:0%"></div></div><div class="mb-v"><span id="bFn">0</span>/<span id="bFt">34</span>g</div></div>
+      <div class="mb"><div class="mb-n" style="color:var(--t2)">カロリー</div><div class="mb-t"><div class="mb-f" id="bK" style="background:var(--acc);width:0%"></div></div><div class="mb-v"><span id="bKn">0</span>/<span id="bKt">1522</span></div></div>
     </div>
   </div>
   <div class="sc" id="fList" style="padding-top:8px"></div>
@@ -418,22 +424,25 @@
 
 <!-- NAV -->
 <nav class="nav">
-  <div class="ni on" onclick="gotoTab('home',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
-    <span>ホーム</span>
+  <div class="nav-items">
+    <div class="ni on" onclick="gotoTab('home',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+      <span>ホーム</span>
+    </div>
+    <div class="ni" onclick="gotoTab('food',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><line x1="7" y1="2" x2="7" y2="22"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3v7"/></svg>
+      <span>食事</span>
+    </div>
+    <div class="ni" onclick="gotoTab('gym',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11m11-11v11M3 9.5h4m14 0h-4M3 14.5h4m14 0h-4m-10.5-2h11"/></svg>
+      <span>ジム</span>
+    </div>
+    <div class="ni" onclick="gotoTab('weight',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 1 18"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span>体重</span>
+    </div>
   </div>
-  <div class="ni" onclick="gotoTab('food',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><line x1="7" y1="2" x2="7" y2="22"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3v7"/></svg>
-    <span>食事</span>
-  </div>
-  <div class="ni" onclick="gotoTab('gym',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11m11-11v11M3 9.5h4m14 0h-4M3 14.5h4m14 0h-4m-10.5-2h11"/></svg>
-    <span>ジム</span>
-  </div>
-  <div class="ni" onclick="gotoTab('weight',this)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 1 18"/><polyline points="16 7 22 7 22 13"/></svg>
-    <span>体重</span>
-  </div>
+  <div class="nav-safe"></div>
 </nav>
 
 <div class="mbg" id="dateMBG">
@@ -468,9 +477,10 @@ const ML={
   ]
 };
 const TGT={low:{p:132.4,f:33.9,c:161.5,k:1522},high:{p:137.7,f:34.1,c:221.4,k:1815}};
-function meals(ds){return ML[S.carbMode[ds]==='high'?'high':'low'];}
-function tgt(ds){return TGT[S.carbMode[ds]==='high'?'high':'low'];}
-function isHigh(ds){return S.carbMode[ds]==='high';}
+function autoCarbMode(ds){const d=new Date(ds+'T00:00:00');return(d.getDay()===0||d.getDay()===6)?'high':'low';}
+function isHigh(ds){return(S.carbMode[ds]!==undefined?S.carbMode[ds]:autoCarbMode(ds))==='high';}
+function meals(ds){return ML[isHigh(ds)?'high':'low'];}
+function tgt(ds){return TGT[isHigh(ds)?'high':'low'];}
 
 function today(){return new Date().toISOString().slice(0,10);}
 function fmtD(ds){const d=new Date(ds+'T00:00:00'),dn=['日','月','火','水','木','金','土'];return ds===today()?`今日（${dn[d.getDay()]}）`:`${d.getMonth()+1}月${d.getDate()}日（${dn[d.getDay()]}）`;}
@@ -513,6 +523,8 @@ function updateCarbBtns(ds){
   if(!lb||!hb)return;
   lb.className='cm-btn '+(hi?'inactive':'low');
   hb.className='cm-btn '+(hi?'high':'inactive');
+  const lbl=document.getElementById('hAutoLbl');
+  if(lbl)lbl.textContent=S.carbMode[ds]!==undefined?'手動設定中（タップで切替）':'自動：土日ハイカーボ';
 }
 function setHomeCarbMode(mode){
   S.carbMode[today()]=mode;save();
@@ -585,7 +597,7 @@ function renderFood(){
     const item=document.createElement('div');item.className='mi'+(on?' ck':'');
     const head=document.createElement('div');head.className='mh';
     head.innerHTML=`<div class="mbadge">${ml.time}</div><div class="mname">${ml.name}</div><div class="mkcal">${mK} kcal</div><button class="mchk${on?' on':''}" onclick="toggleMeal('${ml.id}',event)">${on?'✓':''}</button>`;
-    const body=document.createElement('div');body.className='mbody';
+    const body=document.createElement('div');body.className='mbody open';
     head.addEventListener('click',e=>{if(e.target.classList.contains('mchk')||e.target.closest('.mchk'))return;body.classList.toggle('open');});
     ml.items.forEach(it=>{const r=document.createElement('div');r.className='frow';r.innerHTML=`<div class="fn">${it.n}</div><div class="fa">${it.a}</div><div class="pills"><span class="pill pp">P${it.p}</span><span class="pill pc">C${Math.round(it.c)}</span><span class="pill pf">F${it.f}</span></div>`;body.appendChild(r);});
     if(ml.sup.length){const sa=document.createElement('div');sa.className='sarea';sa.innerHTML=`<div class="slbl">サプリ</div><div class="stags">${ml.sup.map(s=>`<span class="stag">${s}</span>`).join('')}</div>`;body.appendChild(sa);}
