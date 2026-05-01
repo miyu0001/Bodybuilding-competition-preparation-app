@@ -96,17 +96,17 @@
     .mc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
     .mc-mode-text{font-size:13px;font-weight:600;color:var(--t2)}
     .mc-switch{background:none;border:none;font-size:13px;font-weight:700;color:var(--acc);cursor:pointer;padding:0 0 0 2px;-webkit-appearance:none}
-    .mc-ring-wrap{display:flex;justify-content:center;position:relative;margin-bottom:24px}
+    .mc-ring-wrap{display:flex;justify-content:center;position:relative;margin-bottom:22px}
     .mc-ring-ct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
-    .mc-kcal{font-size:30px;font-weight:900;letter-spacing:-1px;line-height:1;color:var(--text)}
-    .mc-kcal-lbl{font-size:11px;font-weight:600;color:var(--t2);margin-top:4px;letter-spacing:.2px}
-    .mc-grid{display:flex;border-top:.5px solid var(--sep);padding-top:20px}
+    .mc-kcal{font-size:22px;font-weight:900;letter-spacing:-.8px;line-height:1;color:var(--text)}
+    .mc-kcal-lbl{font-size:10px;font-weight:600;color:var(--t2);margin-top:3px}
+    .mc-grid{display:flex;border-top:.5px solid var(--sep);padding-top:18px}
     .mc-col{flex:1;text-align:center}
     .mc-col+.mc-col{border-left:.5px solid var(--sep)}
-    .mc-col-dot{width:7px;height:7px;border-radius:50%;margin:0 auto 8px}
-    .mc-col-lbl{font-size:11px;color:var(--t2);font-weight:500;margin-bottom:7px;letter-spacing:.1px}
-    .mc-col-val{font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:1}
-    .mc-col-tgt{font-size:11px;color:var(--t3);margin-top:5px;font-weight:500}
+    .mc-col-dot{width:7px;height:7px;border-radius:50%;margin:0 auto 7px}
+    .mc-col-lbl{font-size:11px;color:var(--t2);font-weight:500;margin-bottom:5px}
+    .mc-col-val{font-size:21px;font-weight:800;letter-spacing:-.5px;line-height:1}
+    .mc-col-tgt{font-size:11px;color:var(--t3);margin-top:3px}
     .chips{display:flex;gap:6px;margin-top:18px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
     .chips::-webkit-scrollbar{display:none}
     .chip{flex-shrink:0;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--bg3);color:var(--t2);transition:all .16s}
@@ -114,13 +114,13 @@
 
     /* Stats — 1 card, 3 cols with dividers */
     .stats-card{background:var(--bg2);border-radius:var(--r);box-shadow:var(--sh);display:flex;overflow:hidden}
-    .stat-col{flex:1;padding:20px 8px;text-align:center}
+    .stat-col{flex:1;padding:18px 8px;text-align:center}
     .stat-col+.stat-col{border-left:.5px solid var(--sep)}
-    .stat-n{font-size:38px;font-weight:900;letter-spacing:-2px;line-height:1}
-    .stat-l{font-size:11px;font-weight:500;color:var(--t2);margin-top:6px}
+    .stat-n{font-size:34px;font-weight:900;letter-spacing:-2px;line-height:1}
+    .stat-l{font-size:11px;font-weight:500;color:var(--t2);margin-top:5px}
 
     /* Weight card on home */
-    .wt-big{font-size:54px;font-weight:900;letter-spacing:-3px;line-height:1}
+    .wt-big{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:1}
     .wt-unit{font-size:17px;font-weight:500;color:var(--t2);margin-left:3px;vertical-align:baseline}
     .wt-goal{font-size:13px;color:var(--t2);font-weight:500}
     .wt-diff{font-size:12px;color:var(--t2);font-weight:500;text-align:right;margin-top:6px}
@@ -273,7 +273,7 @@
           </div>
         </div>
         <div class="mc-ring-wrap">
-          <canvas id="homeRing" width="200" height="200" style="width:200px;height:200px"></canvas>
+          <canvas id="homeRing" width="160" height="160" style="width:160px;height:160px"></canvas>
           <div class="mc-ring-ct">
             <div class="mc-kcal" id="hKcal">0</div>
             <div class="mc-kcal-lbl">kcal</div>
@@ -519,14 +519,14 @@ function renderCountdown(){
   d.textContent=`${comp.getFullYear()}年${comp.getMonth()+1}月${comp.getDate()}日`;
 }
 
-// Retina rings — 200px logical
+// Retina rings — 160px logical
 function drawRings(id,m,t){
   const cv=document.getElementById(id);if(!cv)return;
-  const dpr=window.devicePixelRatio||1,L=200;
+  const dpr=window.devicePixelRatio||1,L=160;
   cv.width=L*dpr;cv.height=L*dpr;cv.style.width=L+'px';cv.style.height=L+'px';
   const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);
   const cx=L/2,cy=L/2;
-  [{r:80,lw:15,v:m.p/t.p,col:'#007AFF',tr:'rgba(0,122,255,.08)'},{r:59,lw:14,v:m.c/t.c,col:'#34C759',tr:'rgba(52,199,89,.08)'},{r:38,lw:13,v:m.f/t.f,col:'#FF9F0A',tr:'rgba(255,159,10,.08)'}].forEach(r=>{
+  [{r:64,lw:13,v:m.p/t.p,col:'#007AFF',tr:'rgba(0,122,255,.09)'},{r:47,lw:12,v:m.c/t.c,col:'#34C759',tr:'rgba(52,199,89,.09)'},{r:30,lw:11,v:m.f/t.f,col:'#FF9F0A',tr:'rgba(255,159,10,.09)'}].forEach(r=>{
     ctx.beginPath();ctx.arc(cx,cy,r.r,0,Math.PI*2);ctx.strokeStyle=r.tr;ctx.lineWidth=r.lw;ctx.stroke();
     if(r.v>0){ctx.beginPath();ctx.arc(cx,cy,r.r,-Math.PI/2,-Math.PI/2+Math.min(r.v,1.02)*Math.PI*2);ctx.strokeStyle=r.col;ctx.lineWidth=r.lw;ctx.lineCap='round';ctx.stroke();}
   });
